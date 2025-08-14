@@ -147,6 +147,10 @@
     --sidebar-border: oklch(0.269 0 0);
     --sidebar-ring: oklch(0.439 0 0);
 }
+.navbar-nav .nav-link:hover {
+    color: #ffd54f !important; 
+    text-decoration: underline;
+}
 
 @layer base {
     * {

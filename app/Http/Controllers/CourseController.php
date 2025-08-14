@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreStudentRequest;
-use App\Http\Requests\UpdateStudentRequest;
-use App\Models\Student;
+use App\Http\Requests\StoreCourseRequest;
+use App\Http\Requests\UpdateCourseRequest;
+use App\Models\Course;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class StudentController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('students.index', [
-            'students' => Student::all()
+        return view('course.index', [
+            'course' => Course::all()
         ]);
     }
 
@@ -27,45 +27,45 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('students.create');
+        return view('course.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStudentRequest $request)
+    public function store(StoreCourseRequest $request)
     {
-        Student::create($request->validated());
+        Course::create($request->validated());
 
-        Session::flash('success', 'Student added successfully');
-        return redirect() -> route('students.index');
+        Session::flash('success', 'Course added successfully');
+        return redirect() -> route('course.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Course $course)
     {
-        return view('students.show', compact('student'));
+        return view('course.show', compact('course'));
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Course $course)
     {
-        return view('students.edit', compact('student'));
+        return view('course.edit', compact('course'));
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentRequest $request, Student $student)
+    public function update(UpdateCourseRequest $request, Course $course)
     {
-        $student->update($request->validated());
-        return redirect()-> route('students.index');
+        $course->update($request->validated());
+        return redirect()-> route('course.index');
     }
 
 
@@ -85,10 +85,10 @@ class StudentController extends Controller
      // return redirect() -> route('students.index');  
   //  }
 
-  public function destroy(Student $student)
+  public function destroy(Course $course)
   {
-    $student->delete();
-    return redirect()->route('students.index');
+    $course->delete();
+    return redirect()->route('course.index');
   }
 
     public function restore($id)
@@ -96,3 +96,4 @@ class StudentController extends Controller
        
     }
 }
+

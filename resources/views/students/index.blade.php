@@ -1,25 +1,39 @@
-@extends('layouts/admin')
+@extends('layouts.admin')
+
 @section('content')
-    <div class="row">
-    <div class="col">
-            <h1 class="display-2">
-                View all Students
-            </h1>
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-4">All Students</h1>
+        </div>
+        <div class="col text-end">
+            <a href="{{ route('students.create') }}" class="btn btn-success">+ Add Student</a>
         </div>
     </div>
+
     <div class="row">
-        @foreach($students as $student)
-        <div class="col-md-4  mb-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $student -> fname }} {{ $student -> lname }}</h5>
-                    <a href="{{ route('students.edit', $student -> id ) }}" class="card-link">Edit</a>
-                    <a href="{{ route('students.destroy', $student -> id ) }}" class="card-link">Delete</a> 
-                    <a href="{{ route('students.show', $student -> id )}}" class="card-link">View</a>
+        @forelse($students as $student)
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $student->fname }} {{ $student->lname }}</h5>
+                        <p class="card-text"><strong>Email:</strong> {{ $student->email }}</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this student?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        @endforeach
+        @empty
+            <div class="col">
+                <div class="alert alert-info">No students found.</div>
+            </div>
+        @endforelse
     </div>
 @endsection
 
