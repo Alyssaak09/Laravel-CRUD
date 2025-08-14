@@ -32,6 +32,19 @@
                     <input type="text" class="form-control" id="description" name="description" value="{{ old('description') }}">
                 </div>
 
+                <div class="mb-3">
+                    <label for="professor_id" class="form-label">Assign Professor</label>
+                    <select name="professor_id" id="professor_id" class="form-select">
+                        <option value="">-- Select a Professor --</option>
+                        @foreach ($professors as $professor)
+                            <option value="{{ $professor->id }}" {{ old('professor_id') == $professor->id ? 'selected' : '' }}>
+                                {{ $professor->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a href="{{ route('course.index') }}" class="btn btn-secondary">Cancel</a>
             </form>

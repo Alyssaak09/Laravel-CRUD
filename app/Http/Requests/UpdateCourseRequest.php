@@ -25,6 +25,7 @@ class UpdateCourseRequest extends FormRequest
             //
             'name' => 'required|string',
             'description' => 'required|string',
+            'professor_id' => 'required|exists:professors,id',
         ];
     }
 }

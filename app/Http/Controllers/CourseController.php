@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCourseRequest;
 use App\Http\Requests\UpdateCourseRequest;
 use App\Models\Course;
+use App\Models\Professor;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -17,18 +18,21 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('course.index', [
-            'course' => Course::all()
-        ]);
+        $courses = Course::with('professor')->get();  
+
+        return view('course.index', compact('courses'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('course.create');
+        $professors = \App\Models\Professor::all();
+        return view('course.create', compact('professors'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -55,7 +59,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('course.edit', compact('course'));
+        $professors = Professor::all();  
+        return view('course.edit', compact('course', 'professors'));
     }
 
 
@@ -64,8 +69,16 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, Course $course)
     {
-        $course->update($request->validated());
-        return redirect()-> route('course.index');
+        $data = $request->validated();
+
+        if ($request->has('professor_id')) {
+            $data['professor_id'] = $request->input('professor_id');
+        }
+
+        $course->update($data);
+
+        Session::flash('success', 'Course updated successfully');
+        return redirect()->route('course.index');
     }
 
 

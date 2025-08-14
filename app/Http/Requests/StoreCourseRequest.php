@@ -25,6 +25,8 @@ class StoreCourseRequest extends FormRequest
             //
             'name' => 'required|string',
             'description' => 'required|string',
+            'professor_id' => 'nullable|exists:professors,id',
+
         ];
     }
 }

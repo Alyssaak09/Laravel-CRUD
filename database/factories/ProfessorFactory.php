@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Professors>
  */
-class ProfessorsFactory extends Factory
+class ProfessorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,6 +20,7 @@ class ProfessorsFactory extends Factory
         return [
             //
             'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
         ];
     }
 }
